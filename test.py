@@ -62,8 +62,13 @@ number_of_flight TEXT NOT NULL,
 departure_date TIMESTAMP NOT NULL,
 departure_airports_id INT,
 arrival_airports_id INT,
+airlines_id INT,
 planes_id INT,
-airlines_id INT
+FOREIGN KEY (departure_airports_id) REFERENCES departure_airports(id),
+FOREIGN KEY (arrival_airports_id ) REFERENCES arrival_airports(id),
+FOREIGN KEY (planes_id) REFERENCES planes(id),
+FOREIGN KEY (airlines_id) REFERENCES airlines(id)
+
 );
 '''
 cur.execute(quary)
@@ -76,7 +81,8 @@ CREATE TABLE planes(
 id INTEGER PRIMARY KEY,
 model TEXT NOT NULL,
 capacity INT,
-airlines_id INT
+airlines_id INT,
+FOREIGN KEY (airlines_id) REFERENCES airlines(id)
 );
 '''
 cur.execute(quary)
@@ -89,7 +95,8 @@ CREATE TABLE seats(
 id INTEGER PRIMARY KEY,
 number_of_the_seat INT,
 row INT,
-class_of_services_id INT
+class_of_services_id INT,
+FOREIGN KEY (class_of_services_id) REFERENCES class_of_services(id)
 );
 '''
 cur.execute(quary)
@@ -106,7 +113,11 @@ price FLOAT,
 clients_id INT,
 flights_id INT,
 seats_id INT,
-class_of_services_id INT
+class_of_services_id INT,
+FOREIGN KEY (clients_id) REFERENCES clients(id),
+FOREIGN KEY (flights_id) REFERENCES flights(id),
+FOREIGN KEY (seats_id) REFERENCES seats(id)
+FOREIGN KEY (class_of_services_id) REFERENCES class_of_services(id)
 );
 '''
 cur.execute(quary)
